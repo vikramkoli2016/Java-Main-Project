@@ -1,0 +1,119 @@
+# Java-Main-Project
+
+package SeleniumProject;
+
+import java.io.IOException;
+import java.util.Set;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class BigBasket_Auto {
+
+	public static void main(String[] args) throws InterruptedException, IOException {
+		// TODO Auto-generated method stub
+
+		System.setProperty("webdriver.chrome.driver","C:\\Eclipes\\Selenium_project\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		
+		//driver.get("https://www.google.com/");
+		//driver.manage().window();
+		
+		driver.get("https://www.bigbasket.com/");
+		driver.manage().window().maximize();
+		
+		driver.getCurrentUrl();
+		System.out.println(driver.getCurrentUrl());
+		
+		driver.getTitle();
+		System.out.println(driver.getTitle());
+		
+		// Sign up/Login
+		
+		driver.findElement(By.linkText("Login/Sign Up")).click();
+		Thread.sleep(3000);
+		
+		driver.findElement(By.xpath("//*[@id=\"login\"]/login/div/form/div[2]/button[1]")).click();
+		driver.findElement(By.id("otpEmail")).sendKeys("vsk25@gmail.com");
+		driver.findElement(By.xpath("//*[@id=\"login\"]/login/div/form/div[2]/button[3]")).click();
+		
+		//driver.findElement(By.xpath("//label[@class='form-control-placeholder']")).sendKeys("8525857612");
+		//driver.findElement(By.xpath("//*[@id=\"login\"]/login/div/div[2]/form/button")).click();
+		
+		driver.findElement(By.xpath("/html/body/div[1]/div/div/div/button")).click();
+		
+		// Mouse houver	
+		
+		driver.findElement(By.xpath("//*[@id=\"navbar\"]/ul/li[1]/a")).click();
+		
+		WebElement beverages = driver.findElement(By.xpath("//*[@id=\"navBarMegaNav\"]/li[4]/a"));
+		Thread.sleep(5000);
+		
+		Actions actions = new Actions(driver);	
+		actions.moveToElement(beverages).perform();
+		
+    WebElement water = driver.findElement(By.linkText("Water"));	
+		actions.moveToElement(water).perform();
+		
+		WebElement PW = driver.findElement(By.linkText("Packaged Water"));	
+		actions.moveToElement(PW).perform();
+		
+		actions.click().build().perform();
+		
+		// Keyboard key
+		
+    WebElement search = driver.findElement(By.id("input"));
+		search.sendKeys("Alkalen");
+		
+		for (int i=0; i<2; i++)
+		{
+			Thread.sleep(2000);
+			search.sendKeys(Keys.DOWN);
+		}
+		search.sendKeys(Keys.ENTER);
+		
+		// Add to cart
+		
+		Thread.sleep(5000);
+		driver.findElement(By.xpath("//*[@id=\"dynamicDirective\"]/product-deck/section/div[2]/div[4]/div[1]/div/div/div[2]/div/div[1]/product-template/div/div[4]/div[3]/div/div[3]/div[2]/div[2]/button")).click();
+		driver.findElement(By.xpath("//*[@id=\"navbar-main\"]/div/bigbasket-cart-template/div/div[2]/a")).click();
+		
+		driver.findElement(By.xpath("//*[@id=\"st-trigger-effects\"]/a")).click(); // Homepage
+		
+		// windows handling
+		
+		driver.navigate().to("https://www.bigbasket.com/");
+		driver.manage().window().maximize();
+		
+		driver.findElement(By.xpath("//*[@id=\"dynamicDirective\"]/carousel-only-image[10]/section/section/div[3]/div/div/a/img")).click();
+		
+		Set<String> handles = driver.getWindowHandles();
+		
+		for (String w:handles)
+		{
+			System.out.println(w);
+			String v = driver.switchTo().window(w).getTitle();
+			System.out.println(v);
+		}
+		
+		// Checkbox
+		
+		WebElement x = driver.findElement(By.xpath("//*[@id=\"refine_by\"]/li/label"));
+		x.click();
+		
+		driver.findElement(By.xpath("/html/body/div[2]/div[3]/div[1]/div[3]/div/ul/li[1]/label")).click();
+		driver.findElement(By.xpath("//*[@id=\"filter_prices_list\"]/li[4]/label")).click();
+		
+		// Add to cart
+		
+		driver.findElement(By.xpath("//*[@id=\"p_40204559_1\"]")).click();
+		
+		driver.findElement(By.xpath("/html/body/div[1]/div[13]/section[2]/div/div/div[1]/a")).click(); // Homepage
+        
+
+	}
+
+}
